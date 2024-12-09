@@ -1,0 +1,253 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Loved+by+the+King&display=swap');
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    color: #ffffff;
+    margin: 0;
+    margin-left: 50%;
+    justify-content: center;
+    padding: 0;
+    height: 100vh;
+    font-family: 'Loved by the King', sans-serif;
+    background-image: url(Fond.jpg); /* Chemin de l'image */
+    background-size: cover; /* Ajuste l'image pour couvrir tout l'espace */
+    background-repeat: no-repeat; /* Évite les répétitions de l'image */
+    background-position: center; /* Centre l'image dans l'espace disponible */
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    height: auto;
+    width: 400px;
+    padding: 20px 20px;
+    background: transparent;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgb(17, 91, 94);
+    border-radius: 10px;
+}
+
+h1 {
+    color: aliceblue;   
+    text-align: center;
+    margin-bottom: 25px;
+    margin-top: 0px;
+    font-size: 40px;
+}
+
+.input-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.todo-input {
+    flex: 1;
+    outline: none;
+    padding: 10px 10px 10px 20px;
+    background-color: transparent;
+    border: 2px solid rgb(17, 91, 94);
+    border-radius: 30px;
+    color: #ffffff;
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.todo-input::placeholder {
+    color: rgb(255, 255, 255);
+}
+
+.add-button {
+    border: none;
+    outline: none;
+    background: rgb(17, 91, 94);
+    font-size: 35px;
+    cursor: pointer;
+    border-radius: 40px;
+    width: 40px;
+    height: 40px;
+}
+
+.empty-image {
+  margin: 55px auto 0;
+  display: block;
+}
+
+.todo{
+    list-style: none; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(32, 131, 134);
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 10px 12px;
+    border: 2px solid rgb(17, 91, 94);
+ }
+
+ .todo:first-child{
+    margin-top: 0;
+ }
+ 
+ .todo:last-child{
+     margin-bottom: 0;
+ }
+ 
+ .todo:hover{
+     background-color: rgb(56, 207, 212);
+ }
+
+ .todo label{
+    cursor: pointer;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    font-family: 'inter', sans-serif;
+    color: #ffffff;
+}
+
+.todo span{
+    padding-left: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+
+span::before{
+    content: "";
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    margin-left: -30px;
+    border-radius: 100px;
+    border: 2px solid rgb(17, 91, 94);
+}
+
+
+input[type='checkbox'] {
+  visibility: hidden;
+}
+
+input:checked + span {
+  text-decoration: line-through
+}
+
+.todo:hover input:checked + span::before, input:checked + span::before {
+  background: url(check.png) 50% 50% no-repeat #09bb21;
+  border-color: #09bb21;
+}
+
+.todo:hover span::before {
+  border-color: #eee;
+}
+
+.todo .delete-btn  {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgb(17, 91, 94);
+  font-size: 24px;
+}
+
+.todos-container  {
+  height: 300px;
+  overflow: overlay;
+}
+
+.todos-container::-webkit-scrollbar-track{
+    background: rgb(255, 255, 255);
+    border-radius: 20px;
+}
+
+.todos-container::-webkit-scrollbar{
+    width: 0px;
+}
+
+.todos-container:hover::-webkit-scrollbar{
+   width: 7px; 
+}
+
+.todos-container::-webkit-scrollbar-thumb{
+    background: #ffffff;
+    border-radius: 20px;
+}
+
+.filters{
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 15px;
+   font-size: 16px;
+}
+
+.filter{
+    color: #ffffff;
+    padding: 5px 15px;
+    border-radius: 100px;
+    border: 2px solid rgb(17, 91, 94);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.filter.active, .filter:hover{
+    background-color: rgb(56, 207, 212);
+}
+
+.delete-all{
+    display: flex;
+    color: #ffffff;
+    padding: 7px 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.delete-all:hover{
+    border-radius: 5px;
+    background-color: rgb(56, 207, 212);
+}
+
+
+/* Media Queries */
+
+/* Pour les écrans de téléphone (largeur maximale de 768px) */
+@media screen and (max-width: 450px) {
+    .container{
+        align-content: center;
+        margin-right: 200px;
+    }
+
+    .todo-form {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    input[type="text"] {
+      margin-bottom: 10px;
+    }
+  
+    button {
+      margin-left: 0;
+    }
+  }
+  
+  /* Pour les écrans de PC portable ou tablettes (largeur entre 769px et 1024px) */
+  @media screen and (min-width: 769px) and (max-width: 1024px) {
+    .container {
+      width: 80%;
+    }
+  }
+
+
+
+
+  
+
+
+
