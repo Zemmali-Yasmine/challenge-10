@@ -93,6 +93,7 @@ h1 {
     border: 2px solid rgb(17, 91, 94);
  }
 
+ 
  .todo:first-child{
     margin-top: 0;
  }
@@ -109,35 +110,41 @@ h1 {
     cursor: pointer;
     width: fit-content;
     display: flex;
+    flex-grow: 1;
     align-items: center;
     font-family: 'inter', sans-serif;
     color: #ffffff;
+}
+
+.todo div {
+  display: flex;
+  align-items: center; 
 }
 
 .todo span{
     padding-left: 20px;
     position: relative;
     cursor: pointer;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
-
 
 span::before{
     content: "";
     height: 20px;
     width: 20px;
     position: absolute;
-    margin-left: -30px;
+    margin-left: -25px;
     border-radius: 100px;
     border: 2px solid rgb(17, 91, 94);
 }
-
 
 input[type='checkbox'] {
   visibility: hidden;
 }
 
 input:checked + span {
-  text-decoration: line-through
+  text-decoration: line-through;
 }
 
 .todo:hover input:checked + span::before, input:checked + span::before {
@@ -155,6 +162,27 @@ input:checked + span {
   cursor: pointer;
   color: rgb(17, 91, 94);
   font-size: 24px;
+}
+
+.edit-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgb(17, 91, 94);
+  font-size: 24px;
+  margin-right: 8px; 
+}
+
+.editable.editing {
+  border: transparent;
+  padding: 2px;
+  outline: none;
+  min-width: 150px;
+}
+
+.editable {
+  word-break: break-word; 
+  overflow-wrap: break-word; 
 }
 
 .todos-container  {

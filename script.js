@@ -18,12 +18,16 @@ function getTodoHtml(todo, index) {
     <li class="todo">
       <label for="${index}">
         <input id="${index}" onclick="updateStatus(this)" type="checkbox" ${checked}>
-        <span class="${checked}">${todo.name}</span>
+        <span class="editable ${checked}" data-index="${index}" contenteditable="false">${todo.name}</span>
       </label>
-      <button class="delete-btn" data-index="${index}" onclick="remove(this)"><i class="fa fa-times"></i></button>
+      <div>
+        <button class="edit-btn" data-index="${index}" onclick="enableEdit(this)"><i class="fa fa-pencil"></i></button>
+        <button class="delete-btn" data-index="${index}" onclick="remove(this)"><i class="fa fa-times"></i></button>
+      </div>
     </li>
-  `; 
+  `;
 }
+
 
 function showTodos() {
   if (todosJson.length == 0) {
@@ -96,3 +100,48 @@ deleteAllButton.addEventListener("click", () => {
   localStorage.setItem("todos", JSON.stringify(todosJson));
   showTodos();
 });
+
+function enableEdit(button) {
+  const index = button.dataset.index;
+  const taskElement = document.querySelector(`span.editable[data-index="${index}"]`);
+
+  // Activer l'édition
+  taskElement.contentEditable = "true";
+  taskElement.classList.add("editing");
+
+  // Placer le curseur à la fin du texte
+  const range = document.createRange();
+  const sel = window.getSelection();
+  range.selectNodeContents(taskElement);
+  range.collapse(false); // Placer le curseur à la fin
+  sel.removeAllRanges();
+  sel.addRange(range);
+
+  taskElement.focus();
+
+  // Gérer la validation avec "Entrée"
+  taskElement.onkeydown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Empêche le saut de ligne
+      saveEdit(taskElement, index);
+    }
+  };
+
+  // Désactiver l'édition lors du blur
+  taskElement.onblur = () => {
+    saveEdit(taskElement, index);
+  };
+}
+
+// Fonction pour sauvegarder l'édition
+function saveEdit(taskElement, index) {
+  taskElement.contentEditable = "false";
+  taskElement.classList.remove("editing");
+
+  // Enregistrer les modifications
+  todosJson[index].name = taskElement.textContent.trim();
+  localStorage.setItem("todos", JSON.stringify(todosJson));
+
+  // Mettre à jour l'affichage
+  showTodos();
+}
