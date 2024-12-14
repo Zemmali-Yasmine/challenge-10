@@ -15,7 +15,11 @@ function getTodoHtml(todo, index) {
   }
   let checked = todo.status == "completed" ? "checked" : "";
   return /* html */ `
-    <li class="todo">
+    <li class="todo" draggable="true" data-index="${index}" 
+        ondragstart="handleDragStart(event)" 
+        ondragover="handleDragOver(event)" 
+        ondrop="handleDrop(event)" 
+        ondragend="handleDragEnd(event)">
       <label for="${index}">
         <input id="${index}" onclick="updateStatus(this)" type="checkbox" ${checked}>
         <span class="editable ${checked}" data-index="${index}" contenteditable="false">${todo.name}</span>
@@ -144,4 +148,51 @@ function saveEdit(taskElement, index) {
 
   // Mettre à jour l'affichage
   showTodos();
+}
+
+
+let draggedItemIndex = null;
+
+// Début du glissement
+function handleDragStart(event) {
+  draggedItemIndex = event.target.dataset.index;
+  event.target.classList.add('dragging');
+}
+
+// Lorsqu'un élément est survolé pendant le glissement
+function handleDragOver(event) {
+  event.preventDefault(); // Nécessaire pour permettre le drop
+  const target = event.target.closest('.todo');
+  if (target && target.dataset.index !== draggedItemIndex) {
+    const draggingItem = document.querySelector('.dragging');
+    const targetIndex = target.dataset.index;
+
+    // Insérez l'élément déplacé avant ou après la cible
+    const todosContainer = document.querySelector('.todos');
+    if (targetIndex > draggedItemIndex) {
+      todosContainer.insertBefore(draggingItem, target.nextSibling);
+    } else {
+      todosContainer.insertBefore(draggingItem, target);
+    }
+  }
+}
+
+// Lorsque l'élément est déposé
+function handleDrop(event) {
+  event.preventDefault();
+  const targetIndex = event.target.closest('.todo').dataset.index;
+
+  // Réorganisez les tâches dans `todosJson`
+  const draggedItem = todosJson.splice(draggedItemIndex, 1)[0];
+  todosJson.splice(targetIndex, 0, draggedItem);
+
+  // Sauvegardez dans localStorage et mettez à jour l'affichage
+  localStorage.setItem('todos', JSON.stringify(todosJson));
+  showTodos();
+}
+
+// Fin du glissement
+function handleDragEnd(event) {
+  event.target.classList.remove('dragging');
+  draggedItemIndex = null;
 }

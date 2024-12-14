@@ -191,7 +191,7 @@ input:checked + span {
 }
 
 .todos-container::-webkit-scrollbar-track{
-    background: rgb(255, 255, 255);
+    background: transparent;
     border-radius: 20px;
 }
 
@@ -204,7 +204,7 @@ input:checked + span {
 }
 
 .todos-container::-webkit-scrollbar-thumb{
-    background: #ffffff;
+    background: transparent;
     border-radius: 20px;
 }
 
@@ -241,6 +241,9 @@ input:checked + span {
     background-color: rgb(56, 207, 212);
 }
 
+.dragging {
+  opacity: 0.5;
+}
 
 /* Media Queries */
 
